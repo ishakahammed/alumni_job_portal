@@ -18,7 +18,7 @@ class CreateAlertsTable extends Migration
             $table->integer('type')->unsigned();
             $table->bigInteger('owner_id')->unsigned();
 
-            $table->foreign('owner_id')->references('id')->on('users')->unsigned();
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete("cascade");
 
             $table->timestamps();
         });

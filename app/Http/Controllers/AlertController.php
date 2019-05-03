@@ -12,14 +12,13 @@ class AlertController extends Controller
 
     public function index()
     {
-        $alerts = auth()->user()->alerts;
-
-        $reversed = $alerts->reverse();
-        $reversed->all();
+        $alerts = Alert::where('owner_id', auth()->id())
+                       ->orderBy('id', 'DESC')
+                       ->get();
 
         //dd($reversed);
 
-        return view('alert.alerts_all')->withAlerts($reversed);
+        return view('alert.alerts_all')->withAlerts($alerts);
 
     }//func
 

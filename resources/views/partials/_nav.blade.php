@@ -10,7 +10,7 @@
                 <div class = "collapse navbar-collapse" id ="click">
                   <ul class = "navbar-nav mx-auto">
                     <li class = "navbar-item ">
-                      <a class = "nav-link" href="#">Home</a>
+                      <a class = "nav-link" href="http://localhost:8000">Home</a>
                     </li>
 
                     @if(Auth::user()->role ==3)
@@ -25,10 +25,10 @@
 
                     @if(Auth::user()->role ==2)
                       <li class = "navbar-item ">
-                        <a class = "nav-link" href="#">Create job</a>
+                        <a class = "nav-link" href="/jobs/create">Create job</a>
                       </li>
                       <li class = "navbar-item ">
-                        <a class = "nav-link" href="#">My jobs</a>
+                        <a class = "nav-link" href="/posted-jobs">My jobs</a>
                       </li>
                       @endif 
                     @if(Auth::user()->role == 3)
@@ -52,9 +52,10 @@
 
                     <li class="navbar-item">
                       
-                      <form class = "form-inline ml-auto"> 
-                        <input class ="form-control"type="text" placeholder= "Search by name">
-                        <button class = "btn btn-success"> Search</button>
+                      <form class = "form-inline ml-auto" method="GET" action="/search-keyword"> 
+                        @csrf
+                        <input class ="form-control" type="text" name="key" placeholder= "Search by name">
+                        <button class = "btn btn-success" type="submit"> Search</button>
                       </form>
 
                     </li>
@@ -85,11 +86,13 @@
 
                   <div class="dropdown-menu">
                       <a href="/profiles/{{ Auth::user()->id }}" class="dropdown-item text-center"> Profile</a>
-                      <a href="/profiles/{{ Auth::user()->id }}" class="dropdown-item text-center"> Change password</a>
-                    @if (Auth::user()->role == 1 || Auth::user()->role == 2)
-                      <a href="/show-reqs" class="dropdown-item">Alumni requests </a>                      
+                      <a href="/password-reset" class="dropdown-item text-center"> Change password</a>
+                      @if (Auth::user()->role != 1)
+                        <a href="/inbox" class="dropdown-item text-center"> inbox</a>
+                      @endif
 
-
+                    @if (Auth::user()->role ==1 )
+                      <a href="/show-reqs" class="dropdown-item">Alumni request </a>
                     @endif
 
                     @if (Auth::user()->role == 2)
@@ -97,11 +100,11 @@
                     @endif
 
                     @if (Auth::user()->role == 2)
-                        <a href="" class="dropdown-item text-center"> All students</a>
+                        <a href="/show-all/3" class="dropdown-item text-center"> All students</a>
                     @endif
 
                     @if (Auth::user()->role == 3)
-                        <a href="" class="dropdown-item text-center"> View alumnis</a>
+                        <a href="/show-all/2" class="dropdown-item text-center"> View alumnis</a>
                     @endif
 
                     @if (Auth::user()->role == 2)
@@ -109,7 +112,7 @@
                     @endif
 
 
-                    @if (Auth::user()->role == 2 || Auth::user()->role == 3)
+                    @if (Auth::user()->role == 3)
                       <a href="/applied-jobs" class="dropdown-item text-center">Applied jobs </a>
                       <a href="/show-interview-calls" class="dropdown-item text-center">Interview calls </a>
                     @endif
@@ -130,6 +133,6 @@
 
         @if(Auth::check() ==false)
                 <a style="margin-right:5px"class=" btn btn-success" href="{{ route('login') }}"> Login </a>
-                <a class=" btn btn-danger" href="{{ route('login') }}"> Register </a>
+                <a class=" btn btn-danger" href="{{ route('register') }}"> Register </a>
         @endif
     </nav>

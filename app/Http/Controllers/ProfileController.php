@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Alumni;
 use Session;
 use Auth;
 
@@ -117,11 +118,40 @@ class ProfileController extends Controller
             //dd('hello');
             $user->img = $request->img->store('public/images');
         }
-
+        //cv insert
         if($request->hasFile('cv')){
-            //dd('hello');
-            $user->cv = $request->cv->store('public/cvs');
-        }
+            
+            $cv_name = $request->file('cv');
+            $destinationPath = 'cv_uploads';
+            $location = $destinationPath."/".$cv_name->getClientOriginalName();
+
+            $cv_name->move($destinationPath, $cv_name->getClientOriginalName());
+            $user->cv = $location;
+
+
+        } //insert cv 
+
+
+
+        //if user is an alumni then his job info will be updated at alumni table
+        if($user->role == 2){
+
+            $alumni = Alumni::where('user_id', $id)->first();
+
+            if(is_null($alumni) == true){
+                $alumni = new Alumni();
+                $alumni->user_id = $id;
+            }//
+            //$alumni = Alumni::findOrFail($alumni->id);
+            //dd(alumni);
+            $alumni->company_name = $request->company_name;
+            $alumni->company_address = $request->company_address;
+            $alumni->job_join_date = $request->job_join_date;
+            $alumni->job_end_date = $request->job_end_date;
+            $alumni->position = $request->position;
+
+            $alumni->save();
+        }//
         
 
         $user->save();
@@ -139,6 +169,12 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
+        
+        //admin can not be deleted
+        $deleted_user = User::findOrFail($id);
+
+        if($deleted_user->role == 1) abort(403);
+
         $user = Auth::user();
         //dd($user->role);
         if($user->role != 1){

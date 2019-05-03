@@ -23,7 +23,7 @@ class CreateJobsTable extends Migration
             $table->string('salary');
             $table->date('deadline');
             $table->bigInteger('owner_id')->unsigned();
-            $table->foreign('owner_id')->references('id')->on('users')->unsigned();
+            $table->foreign('owner_id')->references('id')->on('users')->unsigned()->onDelete("cascade");
             $table->timestamps();
         });
     }

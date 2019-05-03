@@ -16,6 +16,13 @@ class ApplicationController extends Controller
     public function applyJob($job_id, $user_id){
 
     	
+        $current_user = User::findOrFail(auth()->id());
+
+        if($current_user->role < 3){
+            abort(403);
+        }
+
+
     	$user = User::find($user_id);
     	//insert a record in application table
     	$job = Job::find($job_id);
@@ -34,10 +41,15 @@ class ApplicationController extends Controller
 
     public function cancelJobApplication($job_id, $user_id){
 
+        $current_user = User::findOrFail(auth()->id());
+
+        if($current_user->role == 1){
+            abort(403);
+        }
+
+
     	$user = User::find($user_id);
-    	$numberOfAppliedJobs = $user->jobs_applied_count;
-    	if($numberOfAppliedJobs)$numberOfAppliedJobs -= 1;
-    	User::where('id', auth()->id())->update(array('jobs_applied_count' => $numberOfAppliedJobs));
+    	
 
     	//delete the job entry
     	$job = Job::find($job_id);
@@ -48,7 +60,6 @@ class ApplicationController extends Controller
                         		 
         $job_entry->delete();
 
-        Session::flash('warning', 'Cancelled this job application');
 
        // return redirect()->route('jobs.show', $job_id);
 
@@ -125,7 +136,24 @@ class ApplicationController extends Controller
 
         return redirect("applications/$job_id");
     } //func
+    
+    public function allJobInterviewCalls($job_id){
 
+        $applications = Application::where('job_id', $job_id)
+                                   ->where('status', 1)
+                                   ->get();
+
+        $users = collect();
+        $job = Job::findOrFail($job_id);
+
+        foreach($applications as $app){
+            $users->add(User::findOrFail($app->user_id));
+        } //func
+
+        return view('job.all_interview_calls_for_single_job')->withUsers($users)->withApplications($applications)->withJob($job);
+
+
+    }//func
     public function showInterviewCalls(){
 
         $applications = Application::where('user_id', auth()->id())

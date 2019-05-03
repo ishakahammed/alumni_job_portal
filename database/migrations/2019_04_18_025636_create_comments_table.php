@@ -19,8 +19,8 @@ class CreateCommentsTable extends Migration
             $table->bigInteger('job_id')->unsigned();
             $table->bigInteger('owner_id')->unsigned();
 
-            $table->foreign('job_id')->references('id')->on('jobs')->unsigned();
-            $table->foreign('owner_id')->references('id')->on('users')->unsigned();
+            $table->foreign('job_id')->references('id')->on('jobs')->unsigned()->onDelete("cascade");
+            $table->foreign('owner_id')->references('id')->on('users')->unsigned()->onDelete("cascade");
             //$table->foreign('owner_id')->references('id')->on('users')->unsigned();
 
             $table->timestamps();

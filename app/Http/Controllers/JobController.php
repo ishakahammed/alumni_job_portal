@@ -112,8 +112,15 @@ class JobController extends Controller
                         ->where('user_id', auth()->id())
                         ->first();
         //dd($application->user_id);
-        $comments = $job->comments;
-        return view('job.individual_job_post')->withJob($job)->withOwner($user)->withApplication($application)->withComments($comments);
+        $comments = Comment::where('job_id', $job->id)
+                            ->orderBy('id', 'DESC')->get();
+        $commentors = collect();
+
+        foreach($comments as $comment){
+            $commentors->add(User::findOrFail($comment->owner_id));
+        }// 
+                            
+        return view('job.individual_job_post')->withJob($job)->withOwner($user)->withApplication($application)->withComments($comments)->withCommentors($commentors);
     }// func
 
     /**
@@ -138,10 +145,11 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($request);
 
         $this->validate($request, array( /* this keyword is a must use validate() function */
 
-            'title' => 'required|max:500|min:3',
+            'title' => 'required|min:3',
             'description'  => 'required|min:10|max:10000',
             'company'  => 'required|min:5|max:255',
             'requirements'  => 'required|min:5|max:255',
@@ -217,14 +225,6 @@ class JobController extends Controller
 
     }//func
 
-    public function searchByKeyword(Request $request){
-        $keyword = $request->key;
-        $jobs = Job::query()
-                    ->where('requirements', 'LIKE', "%{$keyword}%")
-                    ->paginate(6); 
-
-        return view('job.job_list_keyword_match')->withJobs($jobs)->withKey($keyword);
-
-    }//func
+    
    
 }//class

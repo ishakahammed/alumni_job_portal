@@ -5,13 +5,13 @@
 
 @section('content')
 
-		<div class="col-10">
+		<div class="col-10 offset-1">
 			
 			<!-- all projects-->
 
 		
 		
-		<h2> You posted  <span class="text-success"> {{ count($jobs) }}</span> jobs.</h2>
+		<h2 class="text-center"> You posted  <span class="text-success"> {{ count($jobs) }}</span> jobs.</h2>
 
 		
 		<br>
@@ -25,8 +25,8 @@
 					<div class="card-deck">
 
 						<div class= "card text-center"> <!-- card 1-->
-	            			<div class = "card-header bg-success">
-	                			<h3> {{ $job->title }} </h3>
+	            			<div style="height:200px"class = "card-header bg-success">
+	                			<h3>{{ substr($job->title, 0, 50) }} {{ strlen($job->title) > 50 ? '...' : "" }}   </h3>
 	            			</div>
 	            			<div class = "card-body">
 	                			<a class = "btn btn-info btn-block" href="jobs/{{ $job->id }}">View</a>
@@ -41,8 +41,8 @@
 				@else
 
 					    <div class= "card text-center"> <!-- card 1-->
-	            			<div class = "card-header bg-success">
-	                			<h3> {{ $job->title }}</h3>
+	            			<div style="height:200px" class = "card-header bg-success">
+	                			<h3> {{ substr($job->title, 0, 50) }} {{ strlen($job->title) > 50 ? '...' : "" }}</h3>
 	            			</div>
 	            			<div class = "card-body">
 	                			<a class = "btn btn-info btn-block" href="/jobs/{{ $job->id }}">View</a>

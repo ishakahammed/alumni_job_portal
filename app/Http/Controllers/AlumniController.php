@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\Alumni;
 use App\Req;
 use App\Alert;
 use Auth;
@@ -15,6 +16,13 @@ class AlumniController extends Controller
 {
      
     public function showAlumniRequests(){
+
+        $user = User::findOrFail(auth()->id());
+
+        if($user->role!= 1){
+            abort(403);
+        }
+
 
         $reqs = Req::paginate(8);
         $userCollections = array();
@@ -29,6 +37,12 @@ class AlumniController extends Controller
 
     public function applyForAlumni(){
     	
+        $current_user = User::findOrFail(auth()->id());
+
+        if($current_user->role!= 3){
+            abort(403);
+        }
+
         $get = Req::find(auth()->id());
         
         if(is_null($get)){ 
@@ -47,6 +61,12 @@ class AlumniController extends Controller
 
     public function showAlumniForm(){
 
+        $current_user = User::findOrFail(auth()->id());
+
+        if($current_user->role!= 3){
+            abort(403);
+        }
+
         $user = Req::where('user_id', auth()->id())->first();
 
 
@@ -55,6 +75,13 @@ class AlumniController extends Controller
 
     public function acceptAlumniRequest($user_id){
         
+        $current_user = User::findOrFail(auth()->id());
+
+        if($current_user->role!= 1){
+            abort(403);
+        }
+
+
         $user = User::findOrFail($user_id);
         $user->role = 2;
         $user->save();
@@ -66,6 +93,15 @@ class AlumniController extends Controller
             new ApprovedAlumniRequest()
 
         );
+
+        //make a record on alumni table
+
+        $alumni = new Alumni();
+        $alumni->user_id = $user->id;
+
+        $alumni->save();
+
+
 
 
         Session::flash('success','Successfully accepted an student as an alumni');
@@ -85,9 +121,16 @@ class AlumniController extends Controller
 
     public function deleteAlumniRequest($user_id){
 
-       
+        $current_user = User::findOrFail(auth()->id());
+
+        if($current_user->role!= 1){
+            abort(403);
+        }
 
        // dd('inside delete func');
+
+        
+
 
         $req = Req::where('user_id', $user_id)->first();
 

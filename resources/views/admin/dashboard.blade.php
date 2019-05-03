@@ -13,19 +13,19 @@
               <div class = "card">
                   <div class = "card-body">
                       <h2 class = "card-title">Total Student</h2>
-                      <h4> <span class="text-success"> 24 </span> students are studying in DIU</h4>
+                      <h4> <span class="text-success"> {{ count($students) }} </span> students are studying in DIU</h4>
                   </div>
               </div>
               <div class = "card">
                   <div class = "card-body">
                       <h2 class = "card-title">Total alumni</h2>
-                      <h4> <span class="text-success"> 30 </span> alumnis are successfully graduated from DIU</h4>
+                      <h4> <span class="text-success"> {{ count($alumnis) }} </span> alumnis are successfully graduated from DIU</h4>
                   </div>
               </div>
               <div class = "card">
                   <div class = "card-body">
                       <h2 class = "card-title">Total Post</h2>
-                      <h4> <span class="text-success"> 150</span> Job posts</h4>
+                      <h4> <span class="text-success"> {{ count($jobs) }}</span> Job posts</h4>
                   </div>
               </div>
           </div>

@@ -1,6 +1,6 @@
 @extends('main') {{-- extends the structure of the main.blade.php--}}
 
-@section('title', '| Create New Job Post')
+@section('title', 'All job applications')
 
 @section('content')
      

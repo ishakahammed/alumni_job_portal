@@ -5,10 +5,10 @@
 
 @section('content')
 
-     @if(Auth::user()->role==1) 
+     @if(Auth::user()->role == 1) 
         <div class="col-10"> 
      @else    
-       <div class= "col-8">
+       <div class= "col-8 offset-2">
      @endif
           @if($key == 2)
             <h2  class="text-center"> There are <span class="text-info">  {{ $cnt }} </span>  students are already graduated from DIU.</h2>
@@ -63,7 +63,15 @@
                     @endif
 
                     @if($key ==3)
-                      <td > <a class="btn btn-primary"> view</a></td>
+                      <td > 
+
+                        @if (is_null($user->cv))
+                          <a class="text-danger font-weight-bold"> Not submitted</a>
+                        @else 
+                          <a class="btn btn-primary text-light" href="/{{ $user->cv}}" download> view</a>
+                        @endif
+
+                      </td>
                       
                       <td > {{ is_null($user->batch)? 'not-found': $user->batch }}</td>
                     @endif
@@ -82,8 +90,10 @@
                             <button  class="btn btn-danger text-light" type="submit"> Delete </button> 
                           </form>  
                         --}}
-                          <a  class="btn btn-info text-light" > Denote to Student  </a> 
-                          <a  class="btn btn-danger text-light" > Delete </a> 
+                          @if ($user->role == 2)
+                             <a  href ="/denote-to-student/{{$user->id}}" class="btn btn-info text-light" > Denote to Student  </a> 
+                          @endif 
+                          <a  href = "/delete-user/{{$user->id}}" class="btn btn-danger text-light" > Delete </a> 
                       
                           @if ($key == 3 )
                         
@@ -94,7 +104,7 @@
                       @endif
 
                       @if (Auth::user()->role ==2)
-                        <a href= "/accept-req/{{ $user->id}}"  class= "btn btn-info text-light"> Message </a>
+                        <a href= "/view-chats/{{$user->id}}"  class= "btn btn-info text-light"> Message </a>
                       @endif
                     </td>
 

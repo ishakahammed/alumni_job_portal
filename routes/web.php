@@ -21,12 +21,14 @@ Route::get('/about', function () {
 });
 //--------------------Admin------------
 //dashboard
-Route::get('/dashboard', function () {
+Route::get('/dashboard', 'UserController@seeDashboard');/*function () {
     return view('admin.dashboard');
-});
+});*/
 /*-------------Profile------------------- */
 Route::resource('profiles', 'ProfileController' );
-
+//delete a profile by get request
+Route::get('/delete-user/{user_id}', 'UserController@deleteUser');
+Route::get('/denote-to-student/{user_id}', 'UserController@denoteToStudent');
 Route::get('update-profile', function () {
     return view('profile.profile_update');
 });
@@ -64,7 +66,6 @@ Route::get('/applied-jobs', 'JobController@myAppliedJobs');
 //see all posted jobs by myself
 Route::get('/posted-jobs', 'JobController@myPostedJobs');
 //see all jobs by keyword searching
-Route::post('/search-keyword', 'JobController@searchByKeyword');
 Route::get('view-all-jobs', function () {
     return view('job.all_jobs');
 });
@@ -76,7 +77,7 @@ Route::get('view-a-job', function () {
     return view('job.individual_job_post');
 });
 
-//------------------------------Comments---------------
+
 //add a comment to a job
 Route::post('/add-comment/{job_id}', 'CommentController@addComment');
 //-----------------------------Application (Job Application)-----------
@@ -90,7 +91,9 @@ Route::get('/applications/{job_id}','ApplicationController@showAllApplications')
 Route::get('/accept-interview-req/{job_id}/{user_id}', 'ApplicationController@acceptInterviewRequest');
 //delete a job application for interview
 Route::get('/delete-interview-req/{job_id}/{user_id}', 'ApplicationController@deleteInterviewRequest');
-//show all interview calls of a student+ alumni
+//show all interview calls of a job
+Route::get('/all-interview-calls/{job_id}', 'ApplicationController@allJobInterviewCalls');
+//show all interview calls of a student
 Route::get('/show-interview-calls', 'ApplicationController@showInterviewCalls');
 
 //------------------------------Notification--------------------
@@ -105,9 +108,16 @@ Route::get('view-all-notifications', function () {
 Route::get('/password-reset', 'UserController@showPage');
 Route::post('/change-password', 'UserController@changePassword');
 //------------------chats-------------------
-Route::get('view-all-chats', function () {
-    return view('chat.all_chats');
-});
+
+//post a message
+Route::get('/chats/{receiver_id}', 'ChatController@store');
+//go to chat page
+Route::get('/view-chats/{user_id}', 'ChatController@viewAllChats');
+//check inbox
+Route::get('/inbox', 'ChatController@viewMyInbox');
+
+//-------------------------miscellaneous-----------
+Route::get('/search-keyword', 'UserController@searchByKeyword');
 
 
 

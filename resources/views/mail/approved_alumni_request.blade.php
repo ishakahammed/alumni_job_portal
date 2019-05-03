@@ -3,7 +3,6 @@
 @component('mail::message')
 # Congratulations!!!
 
-The body of your message.
 Your alumni request is accepted. Check your profile
 
 Check your profile

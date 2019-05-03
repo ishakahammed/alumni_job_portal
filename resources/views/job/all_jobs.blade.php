@@ -46,7 +46,7 @@
 	                			<a href="jobs/{{ $job->id }}" class = "btn btn-info btn-block" >View</a>
 	            			</div>
 	            			<div class = "card-footer text-muted bg-warning"> 
-	                			<span class="text-muted"> posted by <span class="text-italic text-danger"> <a style="text-decoration: none" href=" "> rana   </a> </span> {{ $job->created_at->diffForHumans()}}</span>
+	                			<span class="text-danger"> posted  <span class="text-italic text-danger"> <a style="text-decoration: none" href=" ">    </a> </span> {{ $job->created_at->diffForHumans() }}</span>
 	            			</div>
 	        			</div> <!--  card 1-->
 	        
@@ -62,7 +62,7 @@
 	                			<a href="/jobs/{{ $job->id }}" class = "btn btn-info btn-block" >View</a>
 	            			</div>
 	            			<div class = "card-footer text-muted bg-warning"> 
-	                			<span class="text-muted"> posted by <span class="text-italic text-danger"> <a style="text-decoration: none" href=""> najnin  </a></span> {{ $job->created_at->diffForHumans()}}</span>
+	                			<span class="text-danger"> posted  <span class="text-italic text-danger"> <a style="text-decoration: none" href=""> </a></span> {{ $job->created_at->diffForHumans()}}</span>
 	            			</div>
 	        			</div>  
 

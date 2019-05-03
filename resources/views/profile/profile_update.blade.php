@@ -34,6 +34,11 @@
                       <input class = "form-control" type="text" name = "mother_name" value="{{ $user->mother_name }}"> 
                   </div>
 
+                  <div class = "form-group"> 
+                        <label for="cell">  Cell</label>
+                        <input class = "form-control" type="text" name = "cell" value ="{{ $user->cell }}"> 
+                  </div>
+
                   @if(Auth::user()->role == 3)
                     <div class = "form-group"> 
                         <label for="student_id">  Student Id</label>
@@ -55,10 +60,7 @@
 
                                       
 
-                    <div class = "form-group"> 
-                        <label for="cell">  Cell</label>
-                        <input class = "form-control" type="text" name = "cell" value ="{{ $user->cell }}"> 
-                    </div>
+                   
 
                   @endif
 
@@ -97,7 +99,7 @@
 
                   <div class = "form-group">
                     <label for="img">Update Image</label>
-                    <input class = "form-control-file" type="file" name ="img"> 
+                    <input class = "form-control-file" type="file" name ="img"  > 
                     <small class = "form-text text-muted" >Max 2mb size</small> 
                   </div>
 

@@ -3,9 +3,13 @@
 @section('title', 'Individual job post | Alumni job portal')
 
 @section('content')
-     
-
+       
+    @if(Auth::user()->role == 1)
+      <div class= "col-10">
+    @else
        <div class= "col-10 offset-2">
+    @endif
+       
 
             <h3 class= "text-center" style ="margin-bottom:15px;margin-top:15px"> {{ $job->title }} </h3> {{-- job title php --}}
             
@@ -81,7 +85,7 @@
 
             {{-- .................apply job button..... --}}
             {{-- only authenticated user + (alumni /student)  can view this button --}}
-            @if (Auth::check() == true && (Auth::user()->role == 3 || Auth::user()->role == 2) && Auth::user()->id !=$owner->id)
+            @if (Auth::check() == true && (Auth::user()->role == 3) && Auth::user()->id !=$owner->id)
               {{-- show cancel button first--}}
               @if (is_null($application) == false && ($application->user_id == Auth::user()->id))
                   <a href="/cancel-apply/{{ $job->id }}/{{ Auth::user()->id }}" class="btn btn-danger text-light btn-block" style="text-decoration:none"> Cancel Application </a>
@@ -96,17 +100,10 @@
             {{--} only authenticated user + (the alumni who posted this job)  can view this button and edit job post--}}
             
             @if ((Auth::check() == true && $owner->id == Auth::user()->id))
-               
-               <div class="form-group">
-                <form method= "POST" action = "/jobs/{{ $job->id }}"> 
-                  
-                  {{ method_field('PATCH') }}
-                  {{ csrf_field() }}
-
-                  <button  class="btn btn-info text-light btn-block" type ="submit"> Edit this job post</button>
                 
-                </form>
-               </div>
+                <a  style="margin-bottom:3px"href="/jobs/{{$job->id}}/edit" class="btn btn-info text-light btn-block" > Edit this job post</a> 
+                
+                
             @endif
 
 
@@ -138,6 +135,7 @@
 
               <hr>
               <h4 class="text-center"> <span class="text-italic"> Wanna see all applicants for this job? </span> <a  class="text-warning" href= "/applications/{{ $job->id }}" style="text-decoration:none"> Click here </a> </h4>
+              <h4 class="text-center text-muted"> <span class="text-italic"> Wanna see all applicants who called for interview? </span> <a  class="text-danger" href= "/all-interview-calls/{{ $job->id }}" style="text-decoration:none">  Come here</a> </h4>
             @endif
 
             {{-- show comments(for all)--}}
@@ -164,12 +162,27 @@
                 @if (count($comments))
                   <br>
                   <h4> {{ count($comments) }} Comments</h4>
-                @endif                 
+                @endif 
+
+
+                @php
+                  $index = 0
+                @endphp
+
                 @foreach ($comments as $comment)
+
+                  @php
+                    $comment_owner = $commentors->values()->get($index);
+                  @endphp
+
                  <p> {{ $comment->comment_body}}</p>
-                 <p> <span class="font-weight-bold">  By </span>  <a  class="text-success"> samir </a></p>
+                 <p> <span class="font-weight-bold ">  By {{ $comment_owner->first_name }} </span>  <a  class="text-success">  </a></p>
                  <p class="text-muted text-success"> {{ $comment->created_at->diffForHumans() }} </p>
                  <hr>
+
+                 @php
+                    $index = $index + 1
+                 @endphp
                 @endforeach
               </div> {{--col--}}
             </div> {{-- row--}}
