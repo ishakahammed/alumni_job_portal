@@ -74,7 +74,7 @@
             <div class = "carousel-item active"> 
                 <img src = "img/image1.jpg" class ="d-block img-fluid" alt ="1st"> 
             </div>
-            <div class = "carousel-item"> <!-- active ক্লাসটা আর ইউজ হবে না  -->
+            <div class = "carousel-item"> 
                 
                 <img src = "img/image2.jpg" class ="d-block img-fluid" alt ="2nd">
                 

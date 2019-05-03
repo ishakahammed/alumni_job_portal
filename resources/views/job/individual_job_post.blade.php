@@ -148,7 +148,7 @@
                 <div class="col">
                     <form method="POST" action="/add-comment/{{$job->id}}">
                         @csrf
-                        <textarea  style="margin-bottom:3px"class="form-control" name="comment_body">Write something</textarea>
+                        <textarea  style="margin-bottom:3px"class="form-control" name="comment_body" placeholder="Write Something"></textarea>
                         <button class="btn btn-success btn-block" type="submit"> Submit</button>
                     </form>
                 </div> {{-- col--}}

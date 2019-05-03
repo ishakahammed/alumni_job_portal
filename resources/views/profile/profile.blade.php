@@ -52,20 +52,20 @@
                   <p> <span class="font-weight-bold"> Company Address: </span> {{ $user->company_address }} </p>
                   <p> <span class="font-weight-bold"> Join date: </span> {{ $user->job_join_date }} </p>
                   <p> <span class="font-weight-bold"> Job end date: </span> {{ $user->job_end_date }} </p>
-                
+                  
                 @endif
                 
                 @if (Auth::user()->role != 1)
-                  <p> <span class="font-weight-bold"> CV: </span>
+              
+                <p> <span class="font-weight-bold"> CV: </span>
 
                     @if (is_null($user->cv))
                       <span class="text-danger font-weight-bold">  not submitted yet  </span> 
                     @else
                       <a class="text-danger font-weight-bold" href="/{{ $user->cv}}" download> CV of {{ $user->first_name }} </a> 
                     @endif
-                    {{--<a href="{{ $doc->jayga}}" download >cv of ashik</a> --}}
+                    
                   </p>
-
                   <p> <span class="font-weight-bold">  Status: </span>  <span class="text-danger font-weight-bold"> {{ $user['role'] == 2 ? 'Alumni' : 'Student'}}  </span></p> 
                 @endif
                 {{-- implement later @if ($user->role == 1 || Auth::user()->id == $user->id)

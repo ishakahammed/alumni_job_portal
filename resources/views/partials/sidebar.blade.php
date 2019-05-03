@@ -12,7 +12,7 @@
 	   			@if (Auth::user()->role ==1)
 					<div class= "p-4 item-h1">
 		   				
-		   				<a href="/dashboard" class="text-info font-weight-bold"> Dashboard </a> <hr>
+		   				<a href="{{route('dash')}}" class="text-info font-weight-bold"> Dashboard </a> <hr>
 
 		   			</div>
 	   		    @endif

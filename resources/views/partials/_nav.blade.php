@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light bg-light navbar-expand-md">
       <div class="container">
-        <a class = "navbar-brand" href="#"> Alumni Job Portal </a>
+        <a class = "navbar-brand" href="/"> Alumni Job Portal </a>
 
         
        @if (Auth::check())
@@ -10,7 +10,7 @@
                 <div class = "collapse navbar-collapse" id ="click">
                   <ul class = "navbar-nav mx-auto">
                     <li class = "navbar-item ">
-                      <a class = "nav-link" href="http://localhost:8000">Home</a>
+                      <a class = "nav-link" href="/">Home</a>
                     </li>
 
                     @if(Auth::user()->role ==3)

@@ -115,7 +115,6 @@ class ProfileController extends Controller
 
 
         if($request->hasFile('img')){
-            //dd('hello');
             $user->img = $request->img->store('public/images');
         }
         //cv insert

@@ -21,7 +21,8 @@ Route::get('/about', function () {
 });
 //--------------------Admin------------
 //dashboard
-Route::get('/dashboard', 'UserController@seeDashboard');/*function () {
+Route::get('/dashboard', 'UserController@seeDashboard')->name('dash');
+/*function () {
     return view('admin.dashboard');
 });*/
 /*-------------Profile------------------- */
